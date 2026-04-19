@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing Classifier — AI Sketch Recognition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- Header -->
+        <header class="app-header">
+            <h1>Drawing Classifier</h1>
+            <p class="subtitle">Draw something and let AI guess what it is</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+
+            <!-- Canvas Section -->
+            <section class="canvas-section">
+                <div class="canvas-wrapper">
+                  <canvas id="drawingCanvas" width="400" height="400" style="display:block; width:400px; height:400px;"></canvas>
+
+                </div>
+                <div class="canvas-controls">
+                    <button id="predictBtn" class="btn btn-primary">Predict</button>
+                    <button id="clearBtn" class="btn btn-secondary">Clear</button>
+                </div>
+            </section>
+
+            <!-- Predictions Section -->
+            <section class="predictions-section">
+                <h2>Predictions</h2>
+                <div id="predictionsContainer" class="predictions-container">
+                    <p class="placeholder-text">Draw something and click <strong>Predict</strong></p>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>
+                Built with Flask &amp; TensorFlow
+                <span class="separator">|</span>
+                <a href="https://quickdraw.withgoogle.com/data" target="_blank" rel="noopener">QuickDraw Dataset</a>
+            </p>
+        </footer>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Render Blueprint — One-click deployment
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: drawing-classifier
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python train_model.py
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"

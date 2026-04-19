@@ -1,0 +1,38 @@
+# ─── Python ───────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ─── Virtual Environment ─────────────────────────────────────
+venv/
+env/
+.venv/
+tf-env/
+# ─── Model Binaries ──────────────────────────────────────────
+model/*.keras
+model/*.h5
+model/*.pb
+model/categories.txt
+
+# ─── Data ────────────────────────────────────────────────────
+data/
+
+# ─── Debug Images ────────────────────────────────────────────
+debug_images/*.png
+
+# ─── IDE / Editor ────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ─── Environment Variables ───────────────────────────────────
+.env
+.env.local
