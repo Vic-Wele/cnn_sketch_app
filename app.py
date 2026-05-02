@@ -44,6 +44,14 @@ def load_model():
         print(f"  WARNING: Categories file not found at {CATEGORIES_PATH}")
 
 
+def get_model():
+    """Lazy-load model (works for both local and Render/Gunicorn)."""
+    global model
+    if model is None:
+        load_model()
+    return model
+
+
 # ─── Image Preprocessing Pipeline ───────────────────────────────
 def preprocess_canvas_image(data_url):
     """
@@ -126,8 +134,10 @@ def predict():
     Request JSON: { "image": "data:image/png;base64,..." }
     Response JSON: { "predictions": [{"label": "cat", "confidence": 0.95}, ...] }
     """
-    if model is None:
-        return jsonify({"error": "Model not loaded. Run train_model.py first."}), 503
+    # Ensure model is loaded (works on Render/Gunicorn too)
+    model = get_model()
+    if model is None or not categories:
+        return jsonify({"error": "Model or categories not loaded."}), 503
 
     data = request.get_json()
     if not data or "image" not in data:
@@ -144,8 +154,9 @@ def predict():
         top_indices = predictions.argsort()[-TOP_K:][::-1]
         results = []
         for idx in top_indices:
+            label = categories[idx] if idx < len(categories) else f"class_{idx}"
             results.append({
-                "label": categories[idx],
+                "label": label,
                 "confidence": round(float(predictions[idx]) * 100, 2),
             })
 
@@ -156,6 +167,7 @@ def predict():
         return jsonify({"predictions": results})
 
     except Exception as e:
+        print(f"Error in /predict: {e}")
         return jsonify({"error": str(e)}), 500
 
 
